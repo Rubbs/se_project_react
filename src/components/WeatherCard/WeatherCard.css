@@ -14,10 +14,13 @@
   color: #fff;
   font-size: 36px;
   font-weight: 700;
+  font-family: "Cabinet Grotesk", sans-serif;
+  z-index: 1;
 }
 
 .weather-card__image {
   object-fit: cover;
   object-position: right top;
   width: 100%;
+  height: 100%;
 }

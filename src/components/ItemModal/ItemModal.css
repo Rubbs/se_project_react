@@ -1,0 +1,65 @@
+.modal {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal_opened {
+  visibility: visible;
+}
+
+/* Main modal content */
+.modal__content {
+  position: relative;
+  background-color: white;
+  border-radius: 20px;
+  width: 498px;
+  overflow: hidden;
+  font-family: "Cabinet Grotesk", sans-serif;
+}
+
+/* Close button */
+.modal__close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  color: #000;
+  z-index: 1;
+  cursor: pointer;
+}
+
+/* Full-width image */
+.modal__image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* Footer with name and weather */
+.modal__footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #fff;
+}
+
+.modal__caption {
+  margin: 0 0 8px 0;
+  font-weight: 700;
+  font-size: 16px;
+  color: #000;
+}
+
+.modal__weather {
+  margin: 0;
+  font-weight: 400;
+  font-size: 16px;
+  color: #000;
+}
