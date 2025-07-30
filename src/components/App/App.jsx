@@ -81,7 +81,12 @@ function App() {
           <legend className="modal__legend">Select the weather type:</legend>
 
           <label htmlFor="hot" className="modal__label modal__label_type_radio">
-            <input type="radio" id="hot" className="modal__radio-input" />
+            <input
+              type="radio"
+              id="hot"
+              name="weather"
+              className="modal__radio-input"
+            />
             Hot
           </label>
 
@@ -89,7 +94,12 @@ function App() {
             htmlFor="warm"
             className="modal__label modal__label_type_radio"
           >
-            <input type="radio" id="warm" className="modal__radio-input" />
+            <input
+              type="radio"
+              id="warm"
+              name="weather"
+              className="modal__radio-input"
+            />
             Warm
           </label>
 
@@ -97,7 +107,12 @@ function App() {
             htmlFor="cold"
             className="modal__label modal__label_type_radio"
           >
-            <input type="radio" id="cold" className="modal__radio-input" />
+            <input
+              type="radio"
+              id="cold"
+              name="weather"
+              className="modal__radio-input"
+            />
             Cold
           </label>
         </fieldset>

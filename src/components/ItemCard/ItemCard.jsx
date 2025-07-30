@@ -28,7 +28,7 @@ function ItemCard({ item }) {
         <div className="card__preview" onClick={closeModal}>
           <div
             className="card__modal-content"
-            onClick={(e) => e.stopPropagation()} // prevents closing when clicking inside the modal
+            onClick={(e) => e.stopPropagation()}
           >
             <button className="card__close-btn" onClick={closeModal}>
               &times;
@@ -36,9 +36,7 @@ function ItemCard({ item }) {
             <img className="card__image" src={item.link} alt={item.name} />
             <div className="card__modal-text">
               <p className="card__title">{item.name}</p>
-              <p className="card__weather">
-                <strong>Weather:</strong> {item.weather}
-              </p>
+              <p className="card__weather">Weather: {item.weather}</p>
               <p>{item.description}</p>
             </div>
           </div>

@@ -31,6 +31,7 @@
 
 .card__image {
   width: 100%;
+  height: 260px;
   object-fit: cover;
   display: block;
 }
@@ -70,11 +71,12 @@
   font-size: 18px;
   font-weight: 700;
   margin-bottom: 8px;
+  color: rgba(0, 0, 0, 1);
 }
 
 .card__weather {
   font-size: 14px;
-  color: rgba(0, 0, 0, 0.6);
+  color: rgba(0, 0, 0, 1);
 }
 
 .card__close-btn {
