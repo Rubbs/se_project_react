@@ -43,6 +43,22 @@ function App() {
       .catch(console.error);
   }, []);
 
+  useEffect(() => {
+    if (!activeModal) return;
+
+    const handleEsClose = (e) => {
+      if (e.key === "Escape") {
+        closeActiveModal();
+      }
+    };
+
+    document.addEventListener("keydown", handleEsClose);
+
+    return () => {
+      document.removeEventListener("keydown", handleEsClose);
+    };
+  }, [activeModal]);
+
   return (
     <div className="page">
       <div className="page__content">
@@ -54,7 +70,7 @@ function App() {
       <ModalWithForm
         title="New garment"
         buttonText="Add garment"
-        activeModal={activeModal}
+        isOpen={activeModal === "add-garment"}
         onClose={closeActiveModal}
       >
         <label htmlFor="name" className="modal__label">
