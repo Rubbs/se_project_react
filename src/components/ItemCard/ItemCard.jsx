@@ -19,7 +19,7 @@ function ItemCard({ item }) {
         <img
           onClick={openModal}
           className="card__image"
-          src={item.link}
+          src={item.imageUrl}
           alt={item.name}
         />
       </li>
@@ -33,7 +33,7 @@ function ItemCard({ item }) {
             <button className="card__close-btn" onClick={closeModal}>
               &times;
             </button>
-            <img className="card__image" src={item.link} alt={item.name} />
+            <img className="card__image" src={item.imageUrl} alt={item.name} />
             <div className="card__modal-text">
               <p className="card__title">{item.name}</p>
               <p className="card__weather">Weather: {item.weather}</p>
