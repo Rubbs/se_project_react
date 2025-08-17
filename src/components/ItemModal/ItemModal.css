@@ -1,65 +1,108 @@
+/* Background overlay */
 .modal {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 999;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
 }
 
 .modal_opened {
-  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
 }
 
-/* Main modal content */
+/* Modal container */
 .modal__content {
-  position: relative;
-  background-color: white;
-  border-radius: 20px;
-  width: 498px;
+  background: #fff;
+  border-radius: 12px;
+  max-width: 500px;
+  max-height: 90vh;
+  width: 100%;
   overflow: hidden;
-  font-family: "Cabinet Grotesk", sans-serif;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Close button */
 .modal__close {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  background: transparent;
+  top: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.4);
   border: none;
-  font-size: 24px;
-  color: #000;
-  z-index: 1;
-  cursor: pointer;
-}
-
-/* Full-width image */
-.modal__image {
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: cover;
-}
-
-/* Footer with name and weather */
-.modal__footer {
+  border-radius: 50%;
+  color: #fff;
+  font-size: 18px;
+  width: 28px;
+  height: 28px;
+  line-height: 28px;
   text-align: center;
-  padding: 20px;
-  background-color: #fff;
+  cursor: pointer;
+  transition: background 0.2s ease;
 }
 
+.modal__close:hover {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+/* Item image */
+.modal__image {
+  flex: 1; /* ✅ take remaining space */
+  max-height: 70vh;
+  width: 100%;
+  object-fit: contain; /* keep aspect ratio */
+  background: #f5f5f5;
+}
+
+/* Footer */
+.modal__footer {
+  flex-shrink: 0; /* ✅ never shrink away */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  border-top: 1px solid #eee;
+  background: #fff;
+}
+
+.modal__info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Left side text */
 .modal__caption {
-  margin: 0 0 8px 0;
-  font-weight: 700;
+  margin: 0;
   font-size: 16px;
-  color: #000;
+  font-weight: 600;
 }
 
 .modal__weather {
   margin: 0;
-  font-weight: 400;
-  font-size: 16px;
-  color: #000;
+  font-size: 14px;
+  color: #666;
+}
+
+/* Delete button */
+.modal__delete-button {
+  background: transparent;
+  border: none;
+  color: #e63946;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.modal__delete-button:hover {
+  color: #c62828;
+  text-decoration: underline;
 }

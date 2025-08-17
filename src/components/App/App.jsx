@@ -2,21 +2,24 @@ import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import "./App.css";
-import { coordinates, APIkey } from "../../utils/constants";
-import Header from "../Header/Header";
-import Main from "../Main/Main";
-import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
-import ItemModal from "../ItemModal/ItemModal";
-import Profile from "../Profile/Profile";
+import {
+  coordinates,
+  APIkey,
+  defaultClothingItems,
+} from "../../utils/constants";
+import { getItems, deleteItem } from "../../utils/api";
 import { filterWeatherData, getWeather } from "../../utils/weatherApi";
 
-import Footer from "../Footer/Footer";
-
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
+
+import Header from "../Header/Header";
+import Main from "../Main/Main";
+import Profile from "../Profile/Profile";
+import Footer from "../Footer/Footer";
+import ItemModal from "../ItemModal/ItemModal";
 import AddItemModal from "../AddItemModal/AddItemModal";
-import { defaultClothingItems } from "../../utils/constants";
-import { getItems } from "../../utils/api";
+import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -32,33 +35,51 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
 
+  // Function to handle toggle switch change from fahrenheit to celsius and vice versa
   const handleToggleSwitchChange = () => {
     setCurrentTemperatureUnit((prevUnit) => (prevUnit === "F" ? "C" : "F"));
-  };
-
-  const handleCardClick = (card) => {
-    setActiveModal("preview");
-    setSelectedCard(card);
   };
 
   const handleAddClick = () => {
     setActiveModal("add-garment");
   };
 
+  const handleCardClick = (card) => {
+    console.log("Card clicked in App:", card);
+    setSelectedCard(card);
+    setActiveModal("preview");
+  };
+
   const closeActiveModal = () => {
     setActiveModal("");
   };
 
+  // Function to handle adding a new item
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
-    //update clothingItems array
-    setClothingItems((prevItems) => [
-      { name, link: imageUrl, weather },
-      ...prevItems,
-    ]);
-    //close the modal
+    const newItem = {
+      name,
+      link: imageUrl,
+      weather,
+    };
+    setClothingItems((prevItems) => [newItem, ...prevItems]);
     closeActiveModal();
   };
 
+  // Function to handle deleting an item
+  const handleDeleteItem = (id) => {
+    deleteItem(id)
+      .then(() => {
+        setClothingItems((prevItems) =>
+          prevItems.filter((item) => item._id !== id)
+        );
+        closeActiveModal();
+      })
+      .catch((err) => {
+        console.error("Failed to delete item:", err);
+      });
+  };
+
+  // Fectch clothing items on load
   useEffect(() => {
     getWeather(coordinates, APIkey)
       .then((data) => {
@@ -69,6 +90,7 @@ function App() {
       .catch(console.error);
   }, []);
 
+  // Fetch clothing items from the API
   useEffect(() => {
     getItems()
       .then((data) => {
@@ -77,6 +99,7 @@ function App() {
       .catch(console.error);
   }, []);
 
+  // Close modal on Escape key press
   useEffect(() => {
     if (!activeModal) return;
 
@@ -124,6 +147,7 @@ function App() {
               }
             />
           </Routes>
+
           <Footer />
         </div>
 
@@ -133,9 +157,10 @@ function App() {
           onAddItemModalSubmit={handleAddItemModalSubmit}
         />
         <ItemModal
-          activeModal={activeModal}
+          isOpen={activeModal === "preview"}
           card={selectedCard}
           onClose={closeActiveModal}
+          onDeleteItem={handleDeleteItem}
         />
       </div>
     </CurrentTemperatureUnitContext.Provider>
