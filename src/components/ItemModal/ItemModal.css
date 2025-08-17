@@ -54,22 +54,23 @@
 
 /* Item image */
 .modal__image {
-  flex: 1; /* ✅ take remaining space */
-  max-height: 70vh;
+  flex: 1;
+  max-height: 30vh;
   width: 100%;
-  object-fit: contain; /* keep aspect ratio */
+  object-fit: contain;
   background: #f5f5f5;
 }
 
 /* Footer */
 .modal__footer {
-  flex-shrink: 0; /* ✅ never shrink away */
+  flex-shrink: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 14px 18px;
   border-top: 1px solid #eee;
   background: #fff;
+  height: 112px;
 }
 
 .modal__info {
@@ -88,7 +89,7 @@
 .modal__weather {
   margin: 0;
   font-size: 14px;
-  color: #666;
+  color: black;
 }
 
 /* Delete button */
