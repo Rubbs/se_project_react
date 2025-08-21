@@ -1,3 +1,25 @@
 .profile {
+  display: flex; /* simpler than grid for sidebar + main */
+  gap: 32px;
+  padding: 40px;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* Sidebar */
+.profile__sidebar {
+  flex: 0 0 250px; /* fixed width */
+  background: #f5f5f5;
+  border: none;
+}
+
+/* Clothes section (main content) */
+.profile__clothes-items {
+  flex: 1;
+  background: #f5f5f5;
+  border: none;
+  padding: 24px;
   display: flex;
+  flex-direction: column;
 }

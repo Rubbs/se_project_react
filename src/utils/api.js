@@ -1,8 +1,8 @@
 const baseUrl = "http://localhost:3001";
 
-function checkResponse(res) {
+export const checkResponse = (res) => {
   return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
-}
+};
 
 function getItems() {
   return fetch(`${baseUrl}/items`).then(checkResponse);
@@ -19,6 +19,7 @@ function addItem(item) {
 }
 
 function deleteItem(id) {
+  console.log("Attempting to delete item with ID:", id);
   return fetch(`${baseUrl}/items/${id}`, {
     method: "DELETE",
   }).then(checkResponse);

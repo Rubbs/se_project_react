@@ -13,6 +13,12 @@
       "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Boot.png?etag=0953a2ea59f1c6ebc832fabacdc9c70e"
     },
     {
+      "_id": 2,
+      "name": "Cap",
+      "weather": "hot",
+      "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Cap.png?etag=f3dad389b22909cafa73cff9f9a3d591"
+    },
+    {
       "_id": 3,
       "name": "Coat",
       "weather": "cold",
@@ -95,6 +101,18 @@
       "name": "T-Shirt",
       "weather": "hot",
       "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/T-Shirt.png?etag=44ed1963c44ab19cd2f5011522c5fc09"
+    },
+    {
+      "name": "new tshirt",
+      "imageUrl": "https://images.unsplash.com/photo-1744812441866-80ff6acfebdf?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHN1bW1lciUyMHNob2VzfGVufDB8fDB8fHww",
+      "weather": "hot",
+      "_id": 17
+    },
+    {
+      "name": "new tshirt",
+      "imageUrl": "https://images.unsplash.com/photo-1744812441866-80ff6acfebdf?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHN1bW1lciUyMHNob2VzfGVufDB8fDB8fHww",
+      "weather": "cold",
+      "_id": 18
     }
   ]
 }

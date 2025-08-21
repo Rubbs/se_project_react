@@ -14,19 +14,22 @@
 
 .card__name {
   position: absolute;
-  top: 15px;
-  margin: 0;
-  width: 49px;
-  height: 20px;
+  left: 50%; /* center horizontally */
+  transform: translateX(-50%); /* ensure centered */
+  width: 109px;
+  height: 24px;
   background-color: #fff;
   border-radius: 4px;
   font-size: 12px;
   line-height: 15px;
   font-weight: 700;
   color: rgba(0, 0, 0, 0.6);
+
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
+  opacity: 1;
 }
 
 .card__image {
@@ -34,6 +37,7 @@
   height: 260px;
   object-fit: cover;
   display: block;
+  border-radius: 19px;
 }
 
 .card__preview {

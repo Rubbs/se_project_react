@@ -3,12 +3,8 @@ import { Routes, Route } from "react-router-dom";
 
 import "./App.css";
 
-import {
-  coordinates,
-  APIkey,
-  defaultClothingItems,
-} from "../../utils/constants";
-import { getItems, deleteItem } from "../../utils/api";
+import { coordinates, APIkey } from "../../utils/constants";
+import { getItems, deleteItem, addItem } from "../../utils/api";
 import { filterWeatherData, getWeather } from "../../utils/weatherApi";
 
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
@@ -19,7 +15,6 @@ import Profile from "../Profile/Profile";
 import Footer from "../Footer/Footer";
 import ItemModal from "../ItemModal/ItemModal";
 import AddItemModal from "../AddItemModal/AddItemModal";
-import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -30,12 +25,12 @@ function App() {
     isDay: false,
   });
 
-  const [clothingItems, setClothingItems] = useState(defaultClothingItems);
+  const [clothingItems, setClothingItems] = useState([]);
   const [activeModal, setActiveModal] = useState("");
-  const [selectedCard, setSelectedCard] = useState({});
+  const [selectedCard, setSelectedCard] = useState(null);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
 
-  // Function to handle toggle switch change from fahrenheit to celsius and vice versa
+  // Toggle temperature unit
   const handleToggleSwitchChange = () => {
     setCurrentTemperatureUnit((prevUnit) => (prevUnit === "F" ? "C" : "F"));
   };
@@ -54,18 +49,26 @@ function App() {
     setActiveModal("");
   };
 
-  // Function to handle adding a new item
+  //  Add item
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
-    const newItem = {
-      name,
-      link: imageUrl,
-      weather,
-    };
-    setClothingItems((prevItems) => [newItem, ...prevItems]);
-    closeActiveModal();
+    const newItem = { name, imageUrl, weather };
+
+    addItem(newItem)
+      .then((savedItem) => {
+        // normalize response: convert id → _id
+        const normalizedItem = {
+          ...savedItem,
+          _id: savedItem._id || savedItem.id,
+        };
+        setClothingItems((prevItems) => [normalizedItem, ...prevItems]);
+        closeActiveModal();
+      })
+      .catch((err) => {
+        console.error("Failed to add item:", err);
+      });
   };
 
-  // Function to handle deleting an item
+  //  Delete item
   const handleDeleteItem = (id) => {
     deleteItem(id)
       .then(() => {
@@ -79,40 +82,42 @@ function App() {
       });
   };
 
-  // Fectch clothing items on load
+  // Fetch weather
   useEffect(() => {
     getWeather(coordinates, APIkey)
       .then((data) => {
         const filterData = filterWeatherData(data);
-
         setWeatherData(filterData);
       })
       .catch(console.error);
   }, []);
 
-  // Fetch clothing items from the API
+  //  Fetch clothing items and normalize
   useEffect(() => {
     getItems()
       .then((data) => {
-        setClothingItems(data); //set the clothing items that were returned from the API
+        const normalized = data.map((item) => ({
+          ...item,
+          _id: item._id || item.id,
+        }));
+        setClothingItems(normalized);
       })
       .catch(console.error);
   }, []);
 
-  // Close modal on Escape key press
+  // Close modal on Escape
   useEffect(() => {
     if (!activeModal) return;
 
-    const handleEsClose = (e) => {
+    const handleEscClose = (e) => {
       if (e.key === "Escape") {
         closeActiveModal();
       }
     };
 
-    document.addEventListener("keydown", handleEsClose);
-
+    document.addEventListener("keydown", handleEscClose);
     return () => {
-      document.removeEventListener("keydown", handleEsClose);
+      document.removeEventListener("keydown", handleEscClose);
     };
   }, [activeModal]);
 
@@ -128,11 +133,11 @@ function App() {
             <Route
               path="/"
               element={
-                //pass clothing Items as a prop
                 <Main
                   weatherData={weatherData}
                   handleCardClick={handleCardClick}
                   clothingItems={clothingItems}
+                  onDeleteItem={handleDeleteItem}
                 />
               }
             />
@@ -143,6 +148,8 @@ function App() {
                   onCardClick={handleCardClick}
                   clothingItems={clothingItems}
                   weatherData={weatherData}
+                  onAddItem={handleAddClick}
+                  onDeleteItem={handleDeleteItem}
                 />
               }
             />
