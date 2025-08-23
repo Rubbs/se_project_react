@@ -96,11 +96,12 @@
 .modal__delete-button {
   background: transparent;
   border: none;
-  color: #e63946;
+  color: rgba(255, 77, 0, 1);
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
   transition: color 0.2s ease;
+  margin-bottom: 73.78px;
 }
 
 .modal__delete-button:hover {

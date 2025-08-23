@@ -1,32 +1,22 @@
 import ItemCard from "../ItemCard/ItemCard";
 import "./ClothesSection.css";
 
-function ClothesSection({
-  clothingItems,
-  onCardClick,
-  weatherData,
-  onAddItem,
-}) {
+function ClothesSection({ clothingItems, onCardClick, weatherData }) {
+  const itemsToRender =
+    weatherData && weatherData.type
+      ? clothingItems.filter((item) => item.weather === weatherData.type)
+      : clothingItems;
+
   return (
-    <div className="clothes-section">
-      <div className="clothes-section__header">
-        <p className="clothes-section__title">Your items</p>
-        <button className="clothes-section__add-button" onClick={onAddItem}>
-          + Add New
-        </button>
-      </div>
-      <ul className="clothes-section__items">
-        {clothingItems
-          .filter((item) => {
-            return item.weather === weatherData.type;
-          })
-          .map((item) => {
-            return (
-              <ItemCard key={item._id} item={item} onCardClick={onCardClick} />
-            );
-          })}
-      </ul>
-    </div>
+    <ul className="clothes-section__items">
+      {itemsToRender.map((item, index) => (
+        <ItemCard
+          key={item._id || item.id || index}
+          item={item}
+          onCardClick={onCardClick}
+        />
+      ))}
+    </ul>
   );
 }
 

@@ -51,21 +51,17 @@ function App() {
 
   //  Add item
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
-    const newItem = { name, imageUrl, weather };
-
+    const newItem = { name, imageUrl, weather, createdAt: Date.now() }; // 👈 add timestamp
     addItem(newItem)
       .then((savedItem) => {
-        // normalize response: convert id → _id
         const normalizedItem = {
           ...savedItem,
           _id: savedItem._id || savedItem.id,
         };
-        setClothingItems((prevItems) => [normalizedItem, ...prevItems]);
+        setClothingItems((prev) => [normalizedItem, ...prev]);
         closeActiveModal();
       })
-      .catch((err) => {
-        console.error("Failed to add item:", err);
-      });
+      .catch((err) => console.error("Failed to add item:", err));
   };
 
   //  Delete item

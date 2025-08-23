@@ -1,0 +1,19 @@
+.sidebar {
+  display: flex;
+  align-items: baseline; /* keep avatar + name on the same row */
+  gap: 12px;
+}
+
+.sidebar__avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.sidebar__name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #000;
+  line-height: 1.2;
+}

@@ -1,6 +1,6 @@
 .clothes-section__header {
   display: flex;
-  justify-content: space-between;
+  gap: 12px;
   align-items: center;
   margin-bottom: 16px;
 }
@@ -15,19 +15,22 @@
 .clothes-section__add-button {
   background: none;
   border: none;
-  color: #0077ff;
-  font-size: 14px;
+  padding: 0;
+  margin: 0;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 16px;
+  font-weight: 500;
   cursor: pointer;
   transition: color 0.2s ease;
 }
 
 .clothes-section__add-button:hover {
-  color: #005bb5; /* darker blue on hover */
+  color: rgba(0, 0, 0, 0.8);
 }
 
 .clothes-section__items {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr); /* back to 3 columns */
   gap: 16px;
   list-style: none;
   padding: 0;
