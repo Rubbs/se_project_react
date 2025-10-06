@@ -1,0 +1,110 @@
+/* Background overlay */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal_opened {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Modal container */
+.modal__content {
+  background: #fff;
+  border-radius: 12px;
+  max-width: 500px;
+  max-height: 90vh;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Close button */
+.modal__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.4);
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 18px;
+  width: 28px;
+  height: 28px;
+  line-height: 28px;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.modal__close:hover {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+/* Item image */
+.modal__image {
+  flex: 1;
+  max-height: 30vh;
+  width: 100%;
+  object-fit: contain;
+  background: #f5f5f5;
+}
+
+/* Footer */
+.modal__footer {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  border-top: 1px solid #eee;
+  background: #fff;
+  height: 112px;
+}
+
+.modal__info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Left side text */
+.modal__caption {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.modal__weather {
+  margin: 0;
+  font-size: 14px;
+  color: black;
+}
+
+/* Delete button */
+.modal__delete-button {
+  background: transparent;
+  border: none;
+  color: rgba(255, 77, 0, 1);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  margin-bottom: 73.78px;
+}
+
+.modal__delete-button:hover {
+  color: #c62828;
+  text-decoration: underline;
+}

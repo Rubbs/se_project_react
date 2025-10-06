@@ -1,0 +1,40 @@
+.profile {
+  display: flex;
+  align-items: flex-start; /* line up sidebar + clothes section at the top */
+  gap: 40px; /* space between sidebar and clothes content */
+}
+
+.profile__sidebar {
+  display: flex;
+  align-items: baseline; /* align avatar + name to match header text */
+  padding-top: 4px; /* tweak to visually match the header’s baseline */
+}
+
+.profile__main {
+  flex: 1; /* take the rest of the space */
+}
+
+.profile__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.profile__title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.profile__add-button {
+  background: none;
+  border: none;
+  color: gray;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.profile__add-button:hover {
+  color: black;
+}
