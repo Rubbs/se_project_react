@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
+<<<<<<< HEAD
 import { useContext } from "react";
+=======
+>>>>>>> dd1c90d40792728e8628eb75cb1c2b79bd908349
 import "./Header.css";
 import logo from "../../assets/logo.png";
 import avatar from "../../assets/avatar.png";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
+<<<<<<< HEAD
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function Header({
@@ -17,6 +21,10 @@ function Header({
   // Get the current user from context instead of props
   const currentUser = useContext(CurrentUserContext);
 
+=======
+
+function Header({ handleAddClick, weatherData }) {
+>>>>>>> dd1c90d40792728e8628eb75cb1c2b79bd908349
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
@@ -36,6 +44,7 @@ function Header({
         <div className="header__nav">
           <ToggleSwitch className="ToggleSwitch" />
 
+<<<<<<< HEAD
           {!isLoggedIn ? (
             <>
               <button
@@ -82,6 +91,26 @@ function Header({
               </button>
             </>
           )}
+=======
+          <button
+            onClick={handleAddClick}
+            type="button"
+            className="header__add-clothes-btn"
+          >
+            + Add clothes
+          </button>
+
+          <Link to="/profile" className="header__link">
+            <div className="header__user-container">
+              <p className="header__username">Terrence Tegegne</p>
+              <img
+                src={avatar || avatarDefault}
+                alt="Terrence Tegegne"
+                className="header__avatar"
+              />
+            </div>
+          </Link>
+>>>>>>> dd1c90d40792728e8628eb75cb1c2b79bd908349
         </div>
       </div>
     </header>
