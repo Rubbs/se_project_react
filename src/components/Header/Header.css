@@ -25,7 +25,6 @@
   margin-right: 24px;
 }
 
-<<<<<<< HEAD
 .header__register-btn {
   border: none;
 }
@@ -34,8 +33,6 @@
   border: none;
 }
 
-=======
->>>>>>> dd1c90d40792728e8628eb75cb1c2b79bd908349
 @media screen and (max-width: 768px) {
   .header__logo {
     flex: 0 0 88px;

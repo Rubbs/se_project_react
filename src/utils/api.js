@@ -4,7 +4,6 @@ export const checkResponse = (res) => {
   return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
 };
 
-<<<<<<< HEAD
 // Get all clothing items
 export const getItems = (token) => {
   return fetch(`${baseUrl}/items`, {
@@ -18,18 +17,10 @@ export const getItems = (token) => {
 
 // Add a new clothing item
 export const addItem = (item, token) => {
-=======
-function getItems() {
-  return fetch(`${baseUrl}/items`).then(checkResponse);
-}
-
-function addItem(item) {
->>>>>>> dd1c90d40792728e8628eb75cb1c2b79bd908349
   return fetch(`${baseUrl}/items`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-<<<<<<< HEAD
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(item),
@@ -79,7 +70,7 @@ export const getCurrentUser = (token) => {
 };
 
 // Update user profile
-export const updateUserProfile = (data, token) => {
+export const editProfile = (data, token) => {
   return fetch(`${baseUrl}/users/me`, {
     method: "PATCH",
     headers: {
@@ -92,18 +83,3 @@ export const updateUserProfile = (data, token) => {
     }),
   }).then(checkResponse);
 };
-=======
-    },
-    body: JSON.stringify(item),
-  }).then(checkResponse);
-}
-
-function deleteItem(id) {
-  console.log("Attempting to delete item with ID:", id);
-  return fetch(`${baseUrl}/items/${id}`, {
-    method: "DELETE",
-  }).then(checkResponse);
-}
-
-export { getItems, addItem, deleteItem };
->>>>>>> dd1c90d40792728e8628eb75cb1c2b79bd908349

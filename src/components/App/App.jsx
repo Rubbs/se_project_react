@@ -10,10 +10,11 @@ import {
   addItem,
   addCardLike,
   removeCardLike,
+  updateUserProfile,
 } from "../../utils/api";
+
 import { filterWeatherData, getWeather } from "../../utils/weatherApi";
 import { signup, signin, checkToken } from "../../utils/auth";
-import { editProfile } from "../../utils/auth";
 
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
