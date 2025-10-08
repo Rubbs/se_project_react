@@ -11,7 +11,7 @@
   object-fit: cover;
 }
 
-.sidebar__name {
+.sidebar__username {
   font-size: 18px;
   font-weight: 600;
   color: #000;
@@ -19,8 +19,8 @@
 }
 
 .sidebar__avatar-fallback {
-  width: 60px;
-  height: 60px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   background-color: #888;
   display: flex;

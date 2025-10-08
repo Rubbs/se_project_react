@@ -20,24 +20,27 @@ const RegisterModal = ({ isOpen, onClose, onRegister, openLoginModal }) => {
       onSubmit={handleSubmit}
       buttonText="Sign Up"
     >
-      <label>Name</label>
+      <label htmlFor="register-name">Name</label>
       <input
+        id="register-name"
         type="text"
         placeholder="Name"
         value={name}
         onChange={(e) => setName(e.target.value)}
         required
       />
-      <label>Avatar URL</label>
+      <label htmlFor="register-avatar">Avatar URL</label>
       <input
+        id="register-avatar"
         type="url"
         placeholder="Avatar URL"
         value={avatar}
         onChange={(e) => setAvatar(e.target.value)}
       />
 
-      <label>Email</label>
+      <label htmlFor="register-email">Email</label>
       <input
+        id="register-email"
         type="email"
         placeholder="Email"
         value={email}
@@ -45,8 +48,9 @@ const RegisterModal = ({ isOpen, onClose, onRegister, openLoginModal }) => {
         required
       />
 
-      <label>Password</label>
+      <label htmlFor="register-password">Password</label>
       <input
+        id="register-password"
         type="password"
         placeholder="Password"
         value={password}

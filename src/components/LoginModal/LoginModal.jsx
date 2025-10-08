@@ -18,16 +18,18 @@ const LoginModal = ({ isOpen, onClose, onLogin }) => {
       onSubmit={handleSubmit}
       buttonText="Log In"
     >
-      <label>Email</label>
+      <label htmlFor="login-email">Email</label>
       <input
+        id="login-email"
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
       />
 
-      <label>Password</label>
+      <label htmlFor="login-password">Password</label>
       <input
+        id="login-password"
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}

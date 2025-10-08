@@ -70,7 +70,7 @@ export const getCurrentUser = (token) => {
 };
 
 // Update user profile
-export const editProfile = (data, token) => {
+export const updateUserProfile = (data, token) => {
   return fetch(`${baseUrl}/users/me`, {
     method: "PATCH",
     headers: {

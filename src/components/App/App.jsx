@@ -71,7 +71,10 @@ function App() {
   const handleRegister = (data) => {
     signup(data)
       .then((res) => {
-        if (res) handleLogin({ email: data.email, password: data.password });
+        if (res) {
+          handleLogin({ email: data.email, password: data.password });
+          closeActiveModal(); // Close register modal on successful signup
+        }
       })
       .catch((err) => console.error("Signup failed:", err));
   };
@@ -84,6 +87,7 @@ function App() {
           localStorage.setItem("jwt", res.token);
           setIsLoggedIn(true);
           checkToken(res.token).then((user) => setCurrentUser(user));
+          closeActiveModal(); // Close login modal on successful login
         }
       })
       .catch((err) => console.error("Login failed:", err));
@@ -170,7 +174,7 @@ function App() {
   // Edit profile
   const handleEditProfileSubmit = (data) => {
     const token = localStorage.getItem("jwt");
-    editProfile(data, token)
+    updateUserProfile(data, token)
       .then((updatedUser) => {
         setCurrentUser(updatedUser);
         closeActiveModal();
@@ -188,20 +192,17 @@ function App() {
   // Fetch clothing items
   useEffect(() => {
     const token = localStorage.getItem("jwt");
-    if (token && isLoggedIn) {
-      getItems(token)
-        .then((data) =>
-          setClothingItems(
-            data.map((item) => ({ ...item, _id: item._id || item.id }))
-          )
+
+    getItems(token)
+      .then((data) =>
+        setClothingItems(
+          data.map((item) => ({ ...item, _id: item._id || item.id }))
         )
-        .catch((err) => {
-          console.error("Failed to fetch items:", err);
-          if (String(err).includes("401")) handleLogout();
-        });
-    } else {
-      setClothingItems([]);
-    }
+      )
+      .catch((err) => {
+        console.error("Failed to fetch items:", err);
+        if (String(err).includes("401")) handleLogout();
+      });
   }, [isLoggedIn]);
 
   // Close modal on Escape key
