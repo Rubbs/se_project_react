@@ -1,11 +1,11 @@
+// src/components/ClothesSection/ClothesSection.jsx
 import ItemCard from "../ItemCard/ItemCard";
 import "./ClothesSection.css";
 
-function ClothesSection({ clothingItems, onCardClick, weatherData }) {
-  const itemsToRender =
-    weatherData && weatherData.type
-      ? clothingItems.filter((item) => item.weather === weatherData.type)
-      : clothingItems;
+function ClothesSection({ clothingItems, onCardClick, currentUser }) {
+  const itemsToRender = clothingItems.filter(
+    (item) => item.owner === currentUser?._id
+  );
 
   return (
     <ul className="clothes-section__items">

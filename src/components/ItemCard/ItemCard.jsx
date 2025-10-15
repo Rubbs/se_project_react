@@ -1,7 +1,8 @@
+// src/components/ItemCard/ItemCard.jsx
 import React from "react";
 import "./ItemCard.css";
 
-function ItemCard({ item, onCardClick, onCardLike, isLiked }) {
+function ItemCard({ item, onCardClick, onCardLike, isLiked, currentUser }) {
   const handleLikeClick = () => {
     onCardLike(item);
   };
@@ -15,14 +16,16 @@ function ItemCard({ item, onCardClick, onCardLike, isLiked }) {
         src={item.imageUrl || item.link}
         alt={item.name}
       />
-      <button
-        className={`card__like-button ${
-          isLiked ? "card__like-button_liked" : ""
-        }`}
-        onClick={handleLikeClick}
-        type="button"
-        aria-label="Like button"
-      ></button>
+      {currentUser && (
+        <button
+          className={`card__like-button ${
+            isLiked ? "card__like-button_liked" : ""
+          }`}
+          onClick={handleLikeClick}
+          type="button"
+          aria-label="Like button"
+        ></button>
+      )}
     </li>
   );
 }

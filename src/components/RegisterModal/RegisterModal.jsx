@@ -1,17 +1,23 @@
 import React, { useState } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
+// Registration modal component
 const RegisterModal = ({ isOpen, onClose, onRegister, openLoginModal }) => {
   const [name, setName] = useState("");
   const [avatar, setAvatar] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    onRegister({ name, avatar, email, password });
+    onRegister({
+      name,
+      avatar: avatar || "https://i.pravatar.cc/150?img=3",
+      email,
+      password,
+    });
   };
-
+  // Render the registration modal
   return (
     <ModalWithForm
       title="Register"
