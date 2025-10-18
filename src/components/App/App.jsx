@@ -74,14 +74,13 @@ function App() {
     signup(data)
       .then((res) => {
         console.log("Signup response:", res);
-        // Wait a little before calling signin
         setTimeout(() => {
           handleLogin({
             email: data.email.trim(),
             password: data.password.trim(),
           });
         }, 1000);
-        closeActiveModal(); // close the register modal immediately
+        closeActiveModal();
       })
       .catch((err) => console.error("Signup failed:", err));
   };
@@ -93,8 +92,10 @@ function App() {
         if (res.token) {
           localStorage.setItem("jwt", res.token);
           setIsLoggedIn(true);
-          checkToken(res.token).then((user) => setCurrentUser(user));
-          closeActiveModal(); // Close login modal on successful login
+          checkToken(res.token)
+            .then((user) => setCurrentUser(user.data))
+            .catch(console.error);
+          closeActiveModal();
         }
       })
       .catch((err) => console.error("Login failed:", err));
@@ -105,6 +106,7 @@ function App() {
     localStorage.removeItem("jwt");
     setIsLoggedIn(false);
     setCurrentUser(null);
+    setClothingItems([]); // Clear items on logout
   };
 
   // Check token on page load
@@ -136,19 +138,7 @@ function App() {
 
     addItem(newItem, token)
       .then((savedItem) => {
-        console.log("savedItem from API:", savedItem);
-        const normalizedItem = {
-          ...savedItem,
-          _id: savedItem._id || savedItem.id,
-        };
-        setClothingItems((prev) => {
-          const updatedItems = [
-            normalizedItem,
-            ...prev.filter((item) => item._id !== normalizedItem._id),
-          ];
-          console.log("Updated clothingItems after adding:", updatedItems);
-          return updatedItems;
-        });
+        setClothingItems((prev) => [savedItem, ...prev]);
         closeActiveModal();
       })
       .catch((err) => {
@@ -183,7 +173,7 @@ function App() {
     likeAction(_id, token)
       .then((updatedItem) => {
         setClothingItems((cards) =>
-          cards.map((card) => (card._id === _id ? updatedItem : card))
+          cards.map((card) => (card._id === _id ? updatedItem.data : card))
         );
       })
       .catch((err) => {
@@ -210,28 +200,28 @@ function App() {
       .catch(console.error);
   }, []);
 
-  // Fetch clothing items
+  // Fetch clothing items (with normalization + error guards)
   useEffect(() => {
     const token = localStorage.getItem("jwt");
+
+    // Only fetch items if logged in
+    if (!token || !isLoggedIn) {
+      setClothingItems([]);
+      return;
+    }
 
     getItems(token)
       .then((res) => {
         console.log("getItems response:", res);
-        console.log("res.data:", res.data);
-        console.log("Type of res:", typeof res);
 
-        const items = res ?? [];
-        console.log("clothingItems in render:", clothingItems);
-        setClothingItems(
-          items.map((item) => ({
-            ...item,
-            _id: item._id || item.id,
-          }))
-        );
+        // Normalize data to always be an array
+        const normalizedItems = Array.isArray(res?.data) ? res.data : [];
+        setClothingItems(normalizedItems);
       })
       .catch((err) => {
         console.error("Failed to fetch items:", err);
         if (String(err).includes("401")) handleLogout();
+        else setClothingItems([]); // fallback safeguard
       });
   }, [isLoggedIn]);
 

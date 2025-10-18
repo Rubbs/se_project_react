@@ -3,6 +3,8 @@
 import { checkResponse } from "./api";
 
 const BASE_URL = "http://localhost:3001";
+
+
 // Sign up
 export const signup = ({ name, avatar, email, password }) => {
   return fetch(`${BASE_URL}/signup`, {

@@ -1,7 +1,9 @@
 import avatar from "../../assets/avatar.png";
 import "./SideBar.css";
 
-function SideBar({ currentUser, onEditProfileClick, onLogout }) {
+function SideBar({ onEditProfileClick, onLogout }) {
+  const currentUser = useContext(CurrentUserContext);
+
   return (
     <div className="sidebar">
       {/* User avatar */}

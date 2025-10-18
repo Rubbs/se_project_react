@@ -1,7 +1,9 @@
+// src/components/LoginModal/LoginModal.jsx
 import React, { useState } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
+import "./LoginModal.css"; // add if you haven’t yet
 
-const LoginModal = ({ isOpen, onClose, onLogin }) => {
+const LoginModal = ({ isOpen, onClose, onLogin, onSignupClick }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -12,11 +14,11 @@ const LoginModal = ({ isOpen, onClose, onLogin }) => {
 
   return (
     <ModalWithForm
-      title="Login"
+      title="Log In"
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
-      buttonText="Log In"
+      showButton={false} // Hide default submit button
     >
       <label htmlFor="login-email">Email</label>
       <input
@@ -24,6 +26,7 @@ const LoginModal = ({ isOpen, onClose, onLogin }) => {
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email"
         required
       />
 
@@ -33,8 +36,26 @@ const LoginModal = ({ isOpen, onClose, onLogin }) => {
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password"
         required
       />
+
+      <div className="login-modal__actions">
+        <button
+          type="submit"
+          className="login-modal__submit"
+          disabled={!email || !password}
+        >
+          Log In
+        </button>
+        <button
+          type="button"
+          className="login-modal__switch"
+          onClick={onSignupClick}
+        >
+          or Sign Up
+        </button>
+      </div>
     </ModalWithForm>
   );
 };

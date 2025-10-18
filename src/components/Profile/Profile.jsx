@@ -5,21 +5,17 @@ import "./Profile.css";
 
 function Profile({
   clothingItems,
-  currentUser,
   onCardClick,
   onAddItem,
   onEditProfileClick,
   onLogout,
+  onCardLike,
 }) {
   return (
     <div className="profile">
       {/* Left sidebar */}
       <section className="profile__sidebar">
-        <SideBar
-          currentUser={currentUser}
-          onEditProfileClick={onEditProfileClick}
-          onLogout={onLogout}
-        />
+        <SideBar onEditProfileClick={onEditProfileClick} onLogout={onLogout} />
       </section>
 
       {/* Right main content */}
@@ -37,8 +33,8 @@ function Profile({
 
         <ClothesSection
           clothingItems={clothingItems}
-          currentUser={currentUser}
           onCardClick={onCardClick}
+          onCardLike={onCardLike}
         />
       </section>
     </div>

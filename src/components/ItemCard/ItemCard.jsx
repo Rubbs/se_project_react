@@ -1,8 +1,11 @@
 // src/components/ItemCard/ItemCard.jsx
-import React from "react";
+import React, { useContext } from "react";
 import "./ItemCard.css";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-function ItemCard({ item, onCardClick, onCardLike, isLiked, currentUser }) {
+function ItemCard({ item, onCardClick, onCardLike, isLiked }) {
+  const currentUser = useContext(CurrentUserContext);
+
   const handleLikeClick = () => {
     onCardLike(item);
   };

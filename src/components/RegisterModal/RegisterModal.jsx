@@ -7,6 +7,7 @@ const RegisterModal = ({ isOpen, onClose, onRegister, openLoginModal }) => {
   const [avatar, setAvatar] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,6 +18,7 @@ const RegisterModal = ({ isOpen, onClose, onRegister, openLoginModal }) => {
       password,
     });
   };
+
   // Render the registration modal
   return (
     <ModalWithForm
@@ -26,24 +28,7 @@ const RegisterModal = ({ isOpen, onClose, onRegister, openLoginModal }) => {
       onSubmit={handleSubmit}
       buttonText="Sign Up"
     >
-      <label htmlFor="register-name">Name</label>
-      <input
-        id="register-name"
-        type="text"
-        placeholder="Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        required
-      />
-      <label htmlFor="register-avatar">Avatar URL</label>
-      <input
-        id="register-avatar"
-        type="url"
-        placeholder="Avatar URL"
-        value={avatar}
-        onChange={(e) => setAvatar(e.target.value)}
-      />
-
+      {/* Reordered fields to match Figma: Email → Password → Name → Avatar */}
       <label htmlFor="register-email">Email</label>
       <input
         id="register-email"
@@ -62,6 +47,25 @@ const RegisterModal = ({ isOpen, onClose, onRegister, openLoginModal }) => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         required
+      />
+
+      <label htmlFor="register-name">Name</label>
+      <input
+        id="register-name"
+        type="text"
+        placeholder="Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        required
+      />
+
+      <label htmlFor="register-avatar">Avatar URL</label>
+      <input
+        id="register-avatar"
+        type="url"
+        placeholder="Avatar URL"
+        value={avatar}
+        onChange={(e) => setAvatar(e.target.value)}
       />
 
       <p className="modal__switch">
