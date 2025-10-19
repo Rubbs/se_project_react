@@ -15,32 +15,12 @@ function Main({
 }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
 
-  // ✅ Step 1: Create a safe, cleaned-up array
+  // Create a safe, cleaned-up array
   const safeClothingItems = Array.isArray(clothingItems)
     ? clothingItems.filter((item) => item != null)
     : [];
 
-  // ✅ Step 2: Add debugging logs to compare
-  console.log("Original clothingItems:", clothingItems);
-  console.log("Safe clothingItems:", safeClothingItems);
-  console.log(
-    "Any undefined items?",
-    clothingItems.some((item) => item == null)
-  );
-  console.log(
-    "Items without weather property:",
-    safeClothingItems.filter((item) => !item.weather)
-  );
-  console.log("weatherData.type:", weatherData.type);
-  console.log("Available weather types in items:", [
-    ...new Set(
-      safeClothingItems
-        .filter((item) => item.weather)
-        .map((item) => item.weather)
-    ),
-  ]);
-
-  // ✅ Step 3: Use the safe array everywhere
+  // Use the safe array everywhere
   const filteredItems = safeClothingItems.filter((item) => {
     if (!item.weather) return false; // Skip items missing weather data
 

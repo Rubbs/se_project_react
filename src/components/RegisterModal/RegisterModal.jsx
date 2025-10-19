@@ -1,21 +1,24 @@
 import React, { useState } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
+import { useForm } from "../../utils/useForm";
 
 // Registration modal component
 const RegisterModal = ({ isOpen, onClose, onRegister, openLoginModal }) => {
-  const [name, setName] = useState("");
-  const [avatar, setAvatar] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { values, handleChange } = useForm({
+    name: "",
+    avatar: "",
+    email: "",
+    password: "",
+  });
 
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     onRegister({
-      name,
-      avatar: avatar || "https://i.pravatar.cc/150?img=3",
-      email,
-      password,
+      name: values.name,
+      avatar: avatar.avatar || "https://i.pravatar.cc/150?img=3",
+      email: values.email,
+      password: values.password,
     });
   };
 
@@ -28,14 +31,14 @@ const RegisterModal = ({ isOpen, onClose, onRegister, openLoginModal }) => {
       onSubmit={handleSubmit}
       buttonText="Sign Up"
     >
-      {/* Reordered fields to match Figma: Email → Password → Name → Avatar */}
       <label htmlFor="register-email">Email</label>
       <input
         id="register-email"
         type="email"
         placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        name="email"
+        value={values.email}
+        onChange={handleChange}
         required
       />
 
@@ -44,8 +47,9 @@ const RegisterModal = ({ isOpen, onClose, onRegister, openLoginModal }) => {
         id="register-password"
         type="password"
         placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        name="password"
+        value={values.password}
+        onChange={handleChange}
         required
       />
 
@@ -54,8 +58,9 @@ const RegisterModal = ({ isOpen, onClose, onRegister, openLoginModal }) => {
         id="register-name"
         type="text"
         placeholder="Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
+        name="name"
+        value={values.name}
+        onChange={handleChange}
         required
       />
 
@@ -64,8 +69,9 @@ const RegisterModal = ({ isOpen, onClose, onRegister, openLoginModal }) => {
         id="register-avatar"
         type="url"
         placeholder="Avatar URL"
-        value={avatar}
-        onChange={(e) => setAvatar(e.target.value)}
+        name="avatar"
+        value={values.avatar}
+        onChange={handleChange}
       />
 
       <p className="modal__switch">

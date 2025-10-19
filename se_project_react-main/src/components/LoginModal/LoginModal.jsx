@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
+import { useForm } from "../../utils/useForm";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
-const LoginModal = ({ isOpen, onClose, onLogin }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const LoginModal = ({ isOpen, onClose, onLogin, onSignupClick }) => {
+  const { values, handleChange } = useForm({
+    email: "",
+    password: "",
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onLogin({ email, password }); // calls the login handler from App.jsx
+    onLogin(values); //send both email and password to onLogin
   };
 
   return (
@@ -20,18 +23,19 @@ const LoginModal = ({ isOpen, onClose, onLogin }) => {
     >
       <label>Email</label>
       <input
-      
         type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        name="email"
+        value={values.email}
+        onChange={handleChange}
         required
       />
 
       <label>Password</label>
       <input
         type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        name="password"
+        value={values.password}
+        onChange={handleChange}
         required
       />
     </ModalWithForm>
