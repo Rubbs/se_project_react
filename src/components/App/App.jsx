@@ -13,7 +13,6 @@ import {
   removeCardLike,
   updateUserProfile,
 } from "../../utils/api";
-
 import { filterWeatherData, getWeather } from "../../utils/weatherApi";
 import { signup, signin, checkToken } from "../../utils/auth";
 
@@ -31,6 +30,20 @@ import LoginModal from "../LoginModal/LoginModal";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import EditProfileModal from "../EditProfileModal/EditProfileModal";
 
+// Normalize API items to ensure consistency
+const normalizeItems = (items) => {
+  if (!Array.isArray(items)) return [];
+  return items.map((item) => ({
+    _id: item._id || item.id,
+    name: item.name || "",
+    imageUrl: item.imageUrl || item.image || "",
+    weather: item.weather || "",
+    likes: Array.isArray(item.likes) ? item.likes : [],
+    owner: item.owner || null,
+    createdAt: item.createdAt || Date.now(),
+  }));
+};
+
 function App() {
   const [weatherData, setWeatherData] = useState({
     type: "",
@@ -39,19 +52,17 @@ function App() {
     condition: "",
     isDay: false,
   });
-
   const [clothingItems, setClothingItems] = useState([]);
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
 
-  // Authentication states
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
 
-  // Toggle temperature unit
+  // Temperature unit toggle
   const handleToggleSwitchChange = () => {
-    setCurrentTemperatureUnit((prevUnit) => (prevUnit === "F" ? "C" : "F"));
+    setCurrentTemperatureUnit((prev) => (prev === "F" ? "C" : "F"));
   };
 
   // Modal handlers
@@ -62,18 +73,15 @@ function App() {
   };
   const handleLoginClick = () => setActiveModal("login");
   const handleRegisterClick = () => setActiveModal("register");
-  const closeActiveModal = () => setActiveModal("");
   const handleEditProfileClick = () => setActiveModal("edit-profile");
-
-  // Open login modal from RegisterModal
   const openLoginModal = () => setActiveModal("login");
+  const closeActiveModal = () => setActiveModal("");
 
-  // Signup
+  // Register
   const handleRegister = (data) => {
-    console.log("Registering user:", data);
     signup(data)
-      .then((res) => {
-        console.log("Signup response:", res);
+      .then(() => {
+        // Auto login after registration
         setTimeout(() => {
           handleLogin({
             email: data.email.trim(),
@@ -92,10 +100,19 @@ function App() {
         if (res.token) {
           localStorage.setItem("jwt", res.token);
           setIsLoggedIn(true);
-          checkToken(res.token)
-            .then((user) => setCurrentUser(user.data))
-            .catch(console.error);
           closeActiveModal();
+
+          // Verify token → fetch user → fetch items
+          return checkToken(res.token).then((userRes) => {
+            setCurrentUser(userRes.data);
+            return getItems(res.token);
+          });
+        }
+      })
+      .then((itemsRes) => {
+        if (itemsRes) {
+          const normalizedItems = normalizeItems(itemsRes);
+          setClothingItems(normalizedItems);
         }
       })
       .catch((err) => console.error("Login failed:", err));
@@ -106,23 +123,25 @@ function App() {
     localStorage.removeItem("jwt");
     setIsLoggedIn(false);
     setCurrentUser(null);
-    setClothingItems([]); // Clear items on logout
+    setClothingItems([]);
   };
 
   // Check token on page load
   useEffect(() => {
     const token = localStorage.getItem("jwt");
-    if (token) {
-      checkToken(token)
-        .then((user) => {
-          setIsLoggedIn(true);
-          setCurrentUser(user.data);
-        })
-        .catch(() => {
-          setIsLoggedIn(false);
-          setCurrentUser(null);
-        });
-    }
+    if (!token) return;
+
+    checkToken(token)
+      .then((user) => {
+        setIsLoggedIn(true);
+        setCurrentUser(user.data);
+        return getItems(token);
+      })
+      .then((res) => {
+        const normalizedItems = normalizeItems(res);
+        setClothingItems(normalizedItems);
+      })
+      .catch(() => handleLogout());
   }, []);
 
   // Add item
@@ -133,7 +152,7 @@ function App() {
       imageUrl,
       weather,
       createdAt: Date.now(),
-      owner: currentUser._id,
+      owner: currentUser?._id,
     };
 
     addItem(newItem, token)
@@ -142,7 +161,6 @@ function App() {
         closeActiveModal();
       })
       .catch((err) => {
-        console.log("Failed to add item:", err);
         if (String(err).includes("401")) handleLogout();
       });
   };
@@ -158,7 +176,6 @@ function App() {
         closeActiveModal();
       })
       .catch((err) => {
-        console.error("Failed to delete item:", err);
         if (String(err).includes("401")) handleLogout();
       });
   };
@@ -166,10 +183,9 @@ function App() {
   // Like / Unlike item
   const handleCardLike = ({ _id, likes }) => {
     const token = localStorage.getItem("jwt");
-    const isLiked = likes.some((like) => like === currentUser._id);
+    const isLiked = likes.some((like) => like === currentUser?._id);
 
     const likeAction = isLiked ? removeCardLike : addCardLike;
-
     likeAction(_id, token)
       .then((updatedItem) => {
         setClothingItems((cards) =>
@@ -177,7 +193,6 @@ function App() {
         );
       })
       .catch((err) => {
-        console.error("Failed to update like status:", err);
         if (String(err).includes("401")) handleLogout();
       });
   };
@@ -190,42 +205,17 @@ function App() {
         setCurrentUser(updatedUser.data);
         closeActiveModal();
       })
-      .catch((err) => console.error(err));
+      .catch(console.error);
   };
 
-  // Fetch weather data on mount
+  // Fetch weather data
   useEffect(() => {
     getWeather(coordinates, APIkey)
       .then((data) => setWeatherData(filterWeatherData(data)))
       .catch(console.error);
   }, []);
 
-  // Fetch clothing items (with normalization + error guards)
-  useEffect(() => {
-    const token = localStorage.getItem("jwt");
-
-    // Only fetch items if logged in
-    if (!token || !isLoggedIn) {
-      setClothingItems([]);
-      return;
-    }
-
-    getItems(token)
-      .then((res) => {
-        console.log("getItems response:", res);
-
-        // Normalize data to always be an array
-        const normalizedItems = Array.isArray(res?.data) ? res.data : [];
-        setClothingItems(normalizedItems);
-      })
-      .catch((err) => {
-        console.error("Failed to fetch items:", err);
-        if (String(err).includes("401")) handleLogout();
-        else setClothingItems([]); // fallback safeguard
-      });
-  }, [isLoggedIn]);
-
-  // Close modal on Escape key
+  // Close modals on Escape
   useEffect(() => {
     if (!activeModal) return;
     const handleEscClose = (e) => e.key === "Escape" && closeActiveModal();

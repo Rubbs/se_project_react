@@ -111,6 +111,6 @@
 }
 
 .card__like-button_liked {
-  background: url("../../assets/heart-filled.svg") center no-repeat;
+  background: url("../../assets/likedbttn.png") center no-repeat;
   background-size: contain;
 }

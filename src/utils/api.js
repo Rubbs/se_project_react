@@ -6,6 +6,7 @@ export const checkResponse = (res) => {
 
 // Get all clothing items
 export const getItems = (token) => {
+  console.log("Fetching items with token:", token);
   return fetch(`${baseUrl}/items`, {
     headers: token
       ? {
