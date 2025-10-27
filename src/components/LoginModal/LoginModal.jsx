@@ -19,8 +19,8 @@ const LoginModal = ({ isOpen, onClose, onLogin, onSignupClick }) => {
       onClose={onClose}
       onSubmit={handleSubmit}
       showButton={false} // Hide default submit button
+      containerClassName="login-modal__container"
     >
-      <div className="login-modal__container"></div>
       <label htmlFor="login-email">Email</label>
       <input
         id="login-email"

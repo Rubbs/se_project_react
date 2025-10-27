@@ -268,6 +268,7 @@ function App() {
                         onAddItem={handleAddClick}
                         onEditProfileClick={handleEditProfileClick}
                         onLogout={handleLogout}
+                        onCardLike={handleCardLike}
                       />
                     }
                   />
