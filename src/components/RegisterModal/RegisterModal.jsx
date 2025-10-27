@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useForm } from "../../utils/useForm";
+import "./RegisterModal.css"; // add if you haven’t yet
 
 // Registration modal component
 const RegisterModal = ({ isOpen, onClose, onRegister, openLoginModal }) => {
@@ -16,7 +17,7 @@ const RegisterModal = ({ isOpen, onClose, onRegister, openLoginModal }) => {
     e.preventDefault();
     onRegister({
       name: values.name,
-      avatar: avatar.avatar || "https://i.pravatar.cc/150?img=3",
+      avatar: values.avatar || "https://i.pravatar.cc/150?img=3",
       email: values.email,
       password: values.password,
     });
@@ -29,7 +30,7 @@ const RegisterModal = ({ isOpen, onClose, onRegister, openLoginModal }) => {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
-      buttonText="Sign Up"
+      showButton={false} // Hide default submit button
     >
       <label htmlFor="register-email">Email</label>
       <input
@@ -40,6 +41,7 @@ const RegisterModal = ({ isOpen, onClose, onRegister, openLoginModal }) => {
         value={values.email}
         onChange={handleChange}
         required
+        className="modal__input"
       />
 
       <label htmlFor="register-password">Password</label>
@@ -51,6 +53,7 @@ const RegisterModal = ({ isOpen, onClose, onRegister, openLoginModal }) => {
         value={values.password}
         onChange={handleChange}
         required
+        className="modal__input"
       />
 
       <label htmlFor="register-name">Name</label>
@@ -62,6 +65,7 @@ const RegisterModal = ({ isOpen, onClose, onRegister, openLoginModal }) => {
         value={values.name}
         onChange={handleChange}
         required
+        className="modal__input"
       />
 
       <label htmlFor="register-avatar">Avatar URL</label>
@@ -72,14 +76,25 @@ const RegisterModal = ({ isOpen, onClose, onRegister, openLoginModal }) => {
         name="avatar"
         value={values.avatar}
         onChange={handleChange}
+        className="modal__input"
       />
 
-      <p className="modal__switch">
-        or{" "}
-        <span className="modal__switch-link" onClick={openLoginModal}>
-          Log in
-        </span>
-      </p>
+      <div className="register-modal__actions">
+        <button
+          type="submit"
+          className="register-modal__submit"
+          disabled={!values.email || !values.password || !values.name}
+        >
+          Sign Up
+        </button>
+        <button
+          type="button"
+          className="register-modal__switch"
+          onClick={openLoginModal}
+        >
+          or Log In
+        </button>
+      </div>
     </ModalWithForm>
   );
 };

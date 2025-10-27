@@ -52,13 +52,28 @@
 .modal__content {
   background-color: #fff;
   position: relative;
-  padding: 28px 28px 36px;
+  padding: 20px 20px 36px;
   max-width: 496px;
   box-sizing: border-box;
   width: 100%;
   border-radius: 20px;
-  height: 436px;
+  height: 456px;
   border: 1px solid #ccc;
+}
+
+.modalWithForm .login-modal__container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 496px;
+  height: 304;
+  position: relative;
+  top: 259px;
+  left: 472px;
+  border-width: 1px;
+
+  opacity: 1;
+  border-radius: 20px;
 }
 
 .modal__form {
@@ -70,7 +85,7 @@
 .modal__input {
   display: block;
   margin-top: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 1);
   width: 100%;

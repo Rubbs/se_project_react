@@ -111,7 +111,7 @@ function App() {
       })
       .then((itemsRes) => {
         if (itemsRes) {
-          const normalizedItems = normalizeItems(itemsRes);
+          const normalizedItems = normalizeItems(itemsRes.data || itemsRes);
           setClothingItems(normalizedItems);
         }
       })
@@ -138,7 +138,9 @@ function App() {
         return getItems(token);
       })
       .then((res) => {
-        const normalizedItems = normalizeItems(res);
+        console.log("Fetched items on token check:", res);
+        const normalizedItems = normalizeItems(res.data || res);
+        console.log("Normalized items:", normalizedItems);
         setClothingItems(normalizedItems);
       })
       .catch(() => handleLogout());
@@ -157,7 +159,7 @@ function App() {
 
     addItem(newItem, token)
       .then((savedItem) => {
-        setClothingItems((prev) => [savedItem, ...prev]);
+        setClothingItems((prev) => [savedItem.data, ...prev]);
         closeActiveModal();
       })
       .catch((err) => {
@@ -287,6 +289,7 @@ function App() {
             isOpen={activeModal === "login"}
             onClose={closeActiveModal}
             onLogin={handleLogin}
+            onSignupClick={handleRegisterClick}
           />
           <AddItemModal
             isOpen={activeModal === "add-garment"}

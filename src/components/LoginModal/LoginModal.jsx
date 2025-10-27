@@ -20,6 +20,7 @@ const LoginModal = ({ isOpen, onClose, onLogin, onSignupClick }) => {
       onSubmit={handleSubmit}
       showButton={false} // Hide default submit button
     >
+      <div className="login-modal__container"></div>
       <label htmlFor="login-email">Email</label>
       <input
         id="login-email"
@@ -28,6 +29,7 @@ const LoginModal = ({ isOpen, onClose, onLogin, onSignupClick }) => {
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Email"
         required
+        className="modal__input"
       />
 
       <label htmlFor="login-password">Password</label>
@@ -38,6 +40,7 @@ const LoginModal = ({ isOpen, onClose, onLogin, onSignupClick }) => {
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
         required
+        className="modal__input"
       />
 
       <div className="login-modal__actions">
