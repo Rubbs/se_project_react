@@ -51,7 +51,12 @@ function App() {
 
   //  Add item
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
-    const newItem = { name, imageUrl, weather, createdAt: Date.now() }; // 👈 add timestamp
+    const newItem = {
+      name,
+      imageUrl,
+      weather,
+      createdAt: new Date().toISOString(),
+    };
     addItem(newItem)
       .then((savedItem) => {
         const normalizedItem = {
@@ -88,19 +93,25 @@ function App() {
       .catch(console.error);
   }, []);
 
-  //  Fetch clothing items and normalize
   useEffect(() => {
     getItems()
       .then((data) => {
-        const normalized = data.map((item) => ({
+        const normalized = data.map((item, index) => ({
           ...item,
-          _id: item._id || item.id,
+          _id: item._id || item.id || `local-id-${index}-${Date.now()}`,
         }));
-        setClothingItems(normalized);
+
+        // Sort newest first
+        const sorted = normalized.sort((a, b) => {
+          const dateA = a.createdAt ? new Date(a.createdAt) : new Date(a._id);
+          const dateB = b.createdAt ? new Date(b.createdAt) : new Date(b._id);
+          return dateB - dateA;
+        });
+
+        setClothingItems(sorted);
       })
       .catch(console.error);
   }, []);
-
   // Close modal on Escape
   useEffect(() => {
     if (!activeModal) return;
