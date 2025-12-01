@@ -1,12 +1,14 @@
+// src/components/ClothesSection/ClothesSection.jsx
 import ItemCard from "../ItemCard/ItemCard";
 import "./ClothesSection.css";
+import { useContext } from "react";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-function ClothesSection({ clothingItems, onCardClick, weatherData }) {
-  const itemsToRender =
-    weatherData && weatherData.type
-      ? clothingItems.filter((item) => item.weather === weatherData.type)
-      : clothingItems;
-
+function ClothesSection({ clothingItems, onCardClick, onCardLike }) {
+  const currentUser = useContext(CurrentUserContext);
+  const itemsToRender = clothingItems.filter(
+    (item) => item.owner === currentUser?._id
+  );
   return (
     <ul className="clothes-section__items">
       {itemsToRender.map((item, index) => (
@@ -14,6 +16,8 @@ function ClothesSection({ clothingItems, onCardClick, weatherData }) {
           key={item._id || item.id || index}
           item={item}
           onCardClick={onCardClick}
+          onCardLike={onCardLike}
+          isLiked={item.likes.some((like) => like === currentUser?._id)}
         />
       ))}
     </ul>

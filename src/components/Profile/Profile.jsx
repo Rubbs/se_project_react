@@ -1,13 +1,21 @@
+// src/components/Profile/Profile.jsx
 import SideBar from "../SideBar/SideBar";
 import ClothesSection from "../ClothesSection/ClothesSection";
 import "./Profile.css";
 
-function Profile({ clothingItems, onCardClick, onAddItem }) {
+function Profile({
+  clothingItems,
+  onCardClick,
+  onAddItem,
+  onEditProfileClick,
+  onLogout,
+  onCardLike,
+}) {
   return (
     <div className="profile">
       {/* Left sidebar */}
       <section className="profile__sidebar">
-        <SideBar />
+        <SideBar onEditProfileClick={onEditProfileClick} onLogout={onLogout} />
       </section>
 
       {/* Right main content */}
@@ -19,13 +27,14 @@ function Profile({ clothingItems, onCardClick, onAddItem }) {
             type="button"
             onClick={onAddItem}
           >
-            + Add new
+            Add Item
           </button>
         </div>
 
         <ClothesSection
           clothingItems={clothingItems}
           onCardClick={onCardClick}
+          onCardLike={onCardLike}
         />
       </section>
     </div>

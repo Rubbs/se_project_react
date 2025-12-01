@@ -1,11 +1,14 @@
+// ItemModal.jsx
 import "./ItemModal.css";
 
-function ItemModal({ isOpen, onClose, card, onDeleteItem }) {
+function ItemModal({ isOpen, onClose, card, onDeleteItem, currentUser }) {
   if (!card) return null;
 
   const handleDeleteClick = () => {
     onDeleteItem(card._id);
   };
+
+  const isOwner = currentUser && card.owner === currentUser._id;
 
   return (
     <div className={`modal ${isOpen ? "modal_opened" : ""}`}>
@@ -24,13 +27,15 @@ function ItemModal({ isOpen, onClose, card, onDeleteItem }) {
             <p className="modal__weather">Weather: {card.weather}</p>
           </div>
 
-          <button
-            type="button"
-            className="modal__delete-button"
-            onClick={handleDeleteClick}
-          >
-            Delete item
-          </button>
+          {isOwner && (
+            <button
+              type="button"
+              className="modal__delete-button"
+              onClick={handleDeleteClick}
+            >
+              Delete item
+            </button>
+          )}
         </div>
       </div>
     </div>

@@ -25,6 +25,14 @@
   margin-right: 24px;
 }
 
+.header__register-btn {
+  border: none;
+}
+
+.header__login-btn {
+  border: none;
+}
+
 @media screen and (max-width: 768px) {
   .header__logo {
     flex: 0 0 88px;
