@@ -4,20 +4,29 @@ import "./ClothesSection.css";
 import { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-function ClothesSection({ clothingItems, onCardClick, onCardLike }) {
+function ClothesSection({
+  clothingItems,
+  onCardClick,
+  onCardLike,
+  onDeleteItem,
+}) {
   const currentUser = useContext(CurrentUserContext);
+
+  const userId = currentUser?._id;
+
   const itemsToRender = clothingItems.filter(
-    (item) => item.owner === currentUser?._id
+    (item) => String(item.owner) === String(userId)
   );
+
   return (
     <ul className="clothes-section__items">
-      {itemsToRender.map((item, index) => (
+      {itemsToRender.map((item) => (
         <ItemCard
-          key={item._id || item.id || index}
+          key={item._id}
           item={item}
           onCardClick={onCardClick}
           onCardLike={onCardLike}
-          isLiked={item.likes.some((like) => like === currentUser?._id)}
+          onDeleteItem={onDeleteItem}
         />
       ))}
     </ul>

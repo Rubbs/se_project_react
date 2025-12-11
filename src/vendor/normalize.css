@@ -188,6 +188,7 @@ button,
 select {
   /* 1 */
   text-transform: none;
+  border: none;
 }
 
 /**

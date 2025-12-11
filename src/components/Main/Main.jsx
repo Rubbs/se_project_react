@@ -10,36 +10,28 @@ function Main({
   clothingItems,
   onDeleteItem,
   onCardLike,
-  currentUser,
 }) {
-  console.log("Main component received clothingItems:", clothingItems.length);
-
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
-
-  // Debug weather data and clothing items
-  console.log("Main component - clothingItems:", clothingItems);
-  console.log("Main component - weatherData:", weatherData);
 
   // Ensure safe array
   const safeClothingItems = Array.isArray(clothingItems)
-    ? clothingItems.filter((item) => item != null)
+    ? clothingItems.filter(Boolean)
     : [];
 
-  console.log("✅ Safe clothing items count:", safeClothingItems.length);
+  // Grab weather type safely
+  const weatherType = weatherData?.type?.toLowerCase();
 
-  // Filter by matching weather type (case-insensitive)
-  const filteredItems = safeClothingItems.filter((item) => {
-    if (!item.weather || !weatherData?.type) return false;
-    return item.weather.toLowerCase() === weatherData.type.toLowerCase();
-  });
-
-  console.log("Filtering for weather type:", weatherData?.type);
-  console.log("Filtered items count:", filteredItems.length);
-  console.log("Filtered items:", filteredItems);
+  // If weather not loaded → show ALL items
+  const filteredItems = weatherType
+    ? safeClothingItems.filter(
+        (item) => item.weather?.toLowerCase() === weatherType
+      )
+    : safeClothingItems;
 
   return (
     <main>
       <WeatherCard weatherData={weatherData} />
+
       <section className="cards">
         <p className="cards__text">
           Today is{" "}
@@ -48,25 +40,17 @@ function Main({
             : weatherData.temp.C}
           &deg; {currentTemperatureUnit} / You may want to wear:
         </p>
-        <ul className="card__list">
-          {filteredItems.map((item) => {
-            const likesArray = Array.isArray(item.likes) ? item.likes : [];
-            const isLiked = likesArray.some(
-              (like) => like === currentUser?._id
-            );
 
-            return (
-              <ItemCard
-                key={item._id}
-                item={item}
-                onCardClick={onCardClick}
-                onCardLike={onCardLike}
-                onDeleteItem={onDeleteItem}
-                currentUser={currentUser}
-                isLiked={isLiked}
-              />
-            );
-          })}
+        <ul className="card__list">
+          {filteredItems.map((item) => (
+            <ItemCard
+              key={item._id}
+              item={item}
+              onCardClick={onCardClick}
+              onCardLike={onCardLike}
+              onDeleteItem={onDeleteItem}
+            />
+          ))}
         </ul>
       </section>
     </main>

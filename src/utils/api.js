@@ -1,83 +1,72 @@
-const baseUrl = "http://localhost:3001";
+import { BASE_URL } from "./config";
 
+// Universal response handler
 export const checkResponse = (res) => {
-  return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
+  return res.json().then((body) => {
+    if (!res.ok) {
+      return Promise.reject(`Error: ${res.status}`);
+    }
+
+    return body; // backend returns raw object
+  });
 };
 
-// Get all clothing items
+// Helper for Authorization header
+const authHeader = (token, extra = {}) =>
+  token ? { Authorization: `Bearer ${token}`, ...extra } : extra;
+
+// GET all clothing items
 export const getItems = (token) => {
-  console.log("Fetching items with token:", token);
-  return fetch(`${baseUrl}/items`, {
-    headers: token
-      ? {
-          Authorization: `Bearer ${token}`,
-        }
-      : {},
+  return fetch(`${BASE_URL}/items`, {
+    headers: authHeader(token),
   }).then(checkResponse);
 };
 
-// Add a new clothing item
+// ADD a new item
 export const addItem = (item, token) => {
-  return fetch(`${baseUrl}/items`, {
+  return fetch(`${BASE_URL}/items`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
+    headers: authHeader(token, { "Content-Type": "application/json" }),
     body: JSON.stringify(item),
   }).then(checkResponse);
 };
 
-// Delete a clothing item
+// DELETE an item
 export const deleteItem = (id, token) => {
-  return fetch(`${baseUrl}/items/${id}`, {
+  return fetch(`${BASE_URL}/items/${id}`, {
     method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
+    headers: authHeader(token),
   }).then(checkResponse);
 };
 
-// Like clothing item
+// LIKE item
 export const addCardLike = (id, token) => {
-  return fetch(`${baseUrl}/items/${id}/likes`, {
+  return fetch(`${BASE_URL}/items/${id}/likes`, {
     method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
+    headers: authHeader(token),
   }).then(checkResponse);
 };
 
-// Remove like from clothing item
+// UNLIKE item
 export const removeCardLike = (id, token) => {
-  return fetch(`${baseUrl}/items/${id}/likes`, {
+  return fetch(`${BASE_URL}/items/${id}/likes`, {
     method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
+    headers: authHeader(token),
   }).then(checkResponse);
 };
 
-// Get current user
+// GET current user
 export const getCurrentUser = (token) => {
-  return fetch(`${baseUrl}/users/me`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+  return fetch(`${BASE_URL}/users/me`, {
+    headers: authHeader(token),
   }).then(checkResponse);
 };
 
-// Update user profile
+// UPDATE user profile
 export const updateUserProfile = (data, token) => {
-  return fetch(`${baseUrl}/users/me`, {
+  return fetch(`${BASE_URL}/users/me`, {
     method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
+    headers: authHeader(token, { "Content-Type": "application/json" }),
     body: JSON.stringify({
       name: data.name,
       avatar: data.avatar,

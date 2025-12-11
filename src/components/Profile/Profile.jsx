@@ -10,6 +10,7 @@ function Profile({
   onEditProfileClick,
   onLogout,
   onCardLike,
+  onDeleteItem,
 }) {
   return (
     <div className="profile">
@@ -35,6 +36,7 @@ function Profile({
           clothingItems={clothingItems}
           onCardClick={onCardClick}
           onCardLike={onCardLike}
+          onDeleteItem={onDeleteItem}
         />
       </section>
     </div>

@@ -35,9 +35,9 @@ const RegisterModal = ({ isOpen, onClose, onRegister, openLoginModal }) => {
       <label htmlFor="register-email">Email</label>
       <input
         id="register-email"
+        name="email"
         type="email"
         placeholder="Email"
-        name="email"
         value={values.email}
         onChange={handleChange}
         required

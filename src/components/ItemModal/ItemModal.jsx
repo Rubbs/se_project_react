@@ -2,31 +2,31 @@
 import "./ItemModal.css";
 
 function ItemModal({ isOpen, onClose, card, onDeleteItem, currentUser }) {
-  if (!card) return null;
+  if (!isOpen || !card) return null;
+
+  const userId = currentUser?._id;
+  const isOwner = userId && String(card.owner) === String(userId);
 
   const handleDeleteClick = () => {
     onDeleteItem(card._id);
   };
 
-  const isOwner = currentUser && card.owner === currentUser._id;
-
   return (
     <div className={`modal ${isOpen ? "modal_opened" : ""}`}>
-      <div className="modal__content ">
+      <div className="modal__content">
         <button onClick={onClose} type="button" className="modal__close">
           X
         </button>
-        <img
-          src={card.imageUrl || card.link}
-          alt={card.name}
-          className="modal__image"
-        />
+
+        <img src={card.imageUrl} alt={card.name} className="modal__image" />
+
         <div className="modal__footer">
           <div className="modal__info">
             <h2 className="modal__caption">{card.name}</h2>
             <p className="modal__weather">Weather: {card.weather}</p>
           </div>
 
+          {/* Delete Button Only For Owner */}
           {isOwner && (
             <button
               type="button"

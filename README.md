@@ -24,18 +24,40 @@ WTWR is a weather-based clothing suggestion application that helps users decide 
 - OpenWeatherMap API
 - Express.js backend integration
 
-## Backend Repository
+## Fronted Domain
 
-[WTWR Backend](https://github.com/Rubbs/se_project_express.git)
+https://www.appwtwr.jumpingcrab.com
+
+## Backend Domain(API)
+
+https://api.appwtwr.jumpingcrab.com
+
+## Crash Test Route (for PM2 testing)
+
+To test PM2 automatic restart, open the following URL:
+
+https://api.appwtwr.jumpingcrab.com/crash-test
+
+This route intentionally crashes the server.  
+PM2 should automatically restart the app afterward.
+
+## Frontend GitHub Repository
+
+https://github.com/Rubbs/se_project_react.git
+
+## Backend GitHub Repository
+
+(https://github.com/Rubbs/se_project_express.git)
 
 ## Features
 
 - User authentication (signup/signin/logout)
-- Weather-based clothing recommendations
+- Live weather-based clothing recommendations
 - Personal clothing item management
 - Like/unlike clothing items
 - Profile editing
 - Responsive design
+- Full integration with backend API + MongoDB
 
 ## Demo
 

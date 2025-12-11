@@ -2,8 +2,7 @@
 
 import { checkResponse } from "./api";
 
-const BASE_URL = "http://localhost:3001";
-
+import { BASE_URL } from "./config"; // adjust path if needed
 
 // Sign up
 export const signup = ({ name, avatar, email, password }) => {
