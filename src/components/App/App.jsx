@@ -1,7 +1,6 @@
 // src/components/App/App.jsx
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
-
 import "./App.css";
 
 import { coordinates, APIkey } from "../../utils/constants";
@@ -63,7 +62,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
 
-  // Safe state setter — prevents null/undefined items
+  // Safely update clothing items state
   const safeSetClothingItems = (updater) => {
     setClothingItems((prev) => {
       const updated = typeof updater === "function" ? updater(prev) : updater;
@@ -87,6 +86,7 @@ function App() {
   const handleEditProfileClick = () => setActiveModal("edit-profile");
   const closeActiveModal = () => setActiveModal("");
 
+  // Register
   const handleRegister = (data) => {
     console.log("Registration data:", data);
 
@@ -106,11 +106,13 @@ function App() {
             password: data.password.trim(),
           });
         }, 500);
+
+        closeActiveModal();
       })
       .catch((err) => console.error("Signup failed:", err));
   };
 
-  // USER AUTH — LOGIN
+  // Login
   const handleLogin = (data) => {
     signin(data)
       .then((res) => {
@@ -122,6 +124,7 @@ function App() {
 
         return checkToken(res.token).then((userRes) => {
           setCurrentUser(userRes.data);
+
           return getItems(res.token);
         });
       })
@@ -132,7 +135,7 @@ function App() {
       .catch((err) => console.error("Login failed:", err));
   };
 
-  // LOGOUT
+  // Logout
   const handleLogout = () => {
     localStorage.removeItem("jwt");
     setIsLoggedIn(false);
@@ -140,7 +143,7 @@ function App() {
     safeSetClothingItems([]);
   };
 
-  // CHECK TOKEN ON LOAD
+  // Check token on app load
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     if (!token) return;
@@ -155,7 +158,7 @@ function App() {
       .catch(() => handleLogout());
   }, []);
 
-  // ADD ITEM
+  // Add item
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
     const token = localStorage.getItem("jwt");
     addItem({ name, imageUrl, weather }, token)
@@ -166,7 +169,7 @@ function App() {
       .catch((err) => console.error("Add item error:", err));
   };
 
-  // DELETE ITEM
+  // Delete item
   const handleDeleteItem = (id) => {
     const token = localStorage.getItem("jwt");
     deleteItem(id, token)
@@ -220,7 +223,7 @@ function App() {
       });
   }
 
-  // UPDATE PROFILE
+  // Update profile
   const handleEditProfileSubmit = (data) => {
     console.log("🔧 Profile data being sent to backend:", data);
 
@@ -234,14 +237,14 @@ function App() {
       .catch((err) => console.error("PROFILE UPDATE ERROR:", err));
   };
 
-  // GET WEATHER
+  // Fetch weather data on load
   useEffect(() => {
     getWeather(coordinates, APIkey)
       .then((data) => setWeatherData(filterWeatherData(data)))
       .catch(console.error);
   }, []);
 
-  // CLOSE MODAL ON ESC
+  // Close modals on ESC key
   useEffect(() => {
     if (!activeModal) return;
     const onEsc = (e) => e.key === "Escape" && closeActiveModal();
@@ -294,6 +297,7 @@ function App() {
                         onEditProfileClick={handleEditProfileClick}
                         onLogout={handleLogout}
                         onCardLike={handleCardLike}
+                        onDeleteItem={handleDeleteItem}
                       />
                     }
                   />
