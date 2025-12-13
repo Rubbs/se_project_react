@@ -13,16 +13,33 @@ Currently, two official plugins are available:
 
 WTWR is a weather-based clothing suggestion application that helps users decide what to wear based on current weather conditions. The app fetches live weather data from the OpenWeatherMap API and provides personalized clothing recommendations based on temperature and weather conditions.
 
-## Technologies and Techniques Used
+## Technologies and Tools
+
+### Frontend
 
 - React
 - React Router
 - Context API
-- JavaScript ES6+
+- JavaScript (ES6+)
 - CSS3
 - Vite
+
+### Backend
+
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JWT Authentication
+- Celebrate / Joi validation
+- PM2 (process manager)
+- Nginx (reverse proxy)
+
+### APIs & Services
+
 - OpenWeatherMap API
-- Express.js backend integration
+- Google Cloud VM
+- Let’s Encrypt (SSL)
 
 ## Fronted Domain
 
@@ -31,6 +48,10 @@ https://appwtwr.jumpingcrab.com
 ## Backend Domain(API)
 
 https://api.appwtwr.jumpingcrab.com
+
+## Example endpoint
+
+https://api.appwtwr.jumpingcrab.com/items
 
 ## Crash Test Route (for PM2 testing)
 
@@ -51,13 +72,14 @@ https://github.com/Rubbs/se_project_react.git
 
 ## Features
 
-- User authentication (signup/signin/logout)
-- Live weather-based clothing recommendations
-- Personal clothing item management
-- Like/unlike clothing items
-- Profile editing
+- User authentication (sign up / sign in / log out)
+- JWT-protected routes
+- Weather-based clothing recommendations
+- Add, delete, like, and unlike clothing items
+- User profile editing
 - Responsive design
-- Full integration with backend API + MongoDB
+- Secure backend with centralized error handling
+- Full frontend ↔ backend integration
 
 ## Demo
 
