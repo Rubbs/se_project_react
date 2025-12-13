@@ -26,7 +26,7 @@ WTWR is a weather-based clothing suggestion application that helps users decide 
 
 ## Fronted Domain
 
-https://www.appwtwr.jumpingcrab.com
+https://appwtwr.jumpingcrab.com
 
 ## Backend Domain(API)
 
