@@ -26,7 +26,8 @@ import ItemModal from "../ItemModal/ItemModal";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import LoginModal from "../LoginModal/LoginModal";
-import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import ProtectedRoute from "../protectedRoute/ProtectedRoute";
+
 import EditProfileModal from "../EditProfileModal/EditProfileModal";
 
 // Normalize initial item data
