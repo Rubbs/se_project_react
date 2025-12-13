@@ -1,8 +1,6 @@
 .card {
   width: 323px;
   position: relative;
-  display: flex;
-  justify-content: center;
   border-radius: 12px;
   text-align: center;
   font-family: "Cabinet Grotesk", sans-serif;

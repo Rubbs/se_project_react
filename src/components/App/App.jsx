@@ -1,6 +1,6 @@
 // src/components/App/App.jsx
 import { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
 
 import { coordinates, APIkey } from "../../utils/constants";
@@ -47,6 +47,9 @@ const normalizeItems = (items) => {
 };
 
 function App() {
+  const location = useLocation();
+  const isProfilePage = location.pathname === "/profile";
+
   const [weatherData, setWeatherData] = useState({
     type: "",
     temp: { F: 999, C: 999 },
@@ -257,7 +260,7 @@ function App() {
       <CurrentTemperatureUnitContext.Provider
         value={{ currentTemperatureUnit, handleToggleSwitchChange }}
       >
-        <div className="page">
+        <div className={`page ${isProfilePage ? "page_profile" : ""}`}>
           <div className="page__content">
             <Header
               handleAddClick={handleAddClick}

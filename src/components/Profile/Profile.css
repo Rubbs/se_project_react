@@ -1,17 +1,16 @@
 /* MAIN PROFILE WRAPPER */
 .profile {
   display: flex;
-  flex-direction: row;
-  gap: 80px; /* Wide space between sidebar & items section */
-  padding: 40px 80px; /* Matches WTWR Figma layout */
+  gap: 80px;
+  padding: 40px 0;
   width: 100%;
   box-sizing: border-box;
 }
 
 /* LEFT SIDEBAR */
 .profile__sidebar {
-  width: 180px; /* Fixed width like Figma */
-  flex-shrink: 0; /* Do NOT shrink */
+  width: 180px;
+  flex-shrink: 0;
 }
 
 /* RIGHT MAIN CONTENT */
@@ -28,7 +27,7 @@
 }
 
 .profile__title {
-  font-size: 22px; /* Figma size */
+  font-size: 22px;
   font-weight: 600;
   margin: 0;
 }
@@ -37,13 +36,99 @@
 .profile__add-button {
   background: none;
   border: none;
-  font-size: 18px; /* Bigger like Figma */
+  font-size: 18px;
   font-weight: 500;
   cursor: pointer;
-  color: #3b77f3; /* WTWR blue */
+  color: rgba(0, 0, 0, 0.6);
   margin-left: 10px;
 }
 
 .profile__add-button:hover {
   opacity: 0.7;
+}
+
+/* PROFILE PAGE SIDEBAR ONLY */
+.profile .sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.profile .sidebar__avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile .sidebar__username {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+
+  position: relative;
+  left: 68px;
+  top: -44px;
+}
+
+/* buttons below avatar + name */
+.profile .sidebar__edit-button,
+.profile .sidebar__logout-button {
+  background: none;
+  border: none;
+  padding: 0;
+
+  font-size: 20px;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 1);
+
+  cursor: pointer;
+  text-align: left;
+
+  margin-top: 4px;
+}
+
+/* HEADER STYLES OVERRIDE FOR PROFILE PAGE */
+
+.profile .header {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  outline: 2px solid red;
+}
+
+.profile .header__container {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* PROFILE PAGE: remove centering constraint */
+.page_profile .page__content {
+  max-width: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.page_profile .header {
+  width: 100%;
+}
+
+.page_profile .header__container {
+  display: flex;
+  align-items: center;
+}
+
+.page_profile .header__logo {
+  margin-right: 12px;
+}
+
+.page_profile .header__date-and-location {
+  margin: 0;
+  white-space: nowrap;
+}
+
+@media screen and (min-width: 1024px) {
+  .page_profile .header__nav {
+    margin-left: 666px;
+  }
 }
