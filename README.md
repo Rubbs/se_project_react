@@ -83,5 +83,6 @@ https://github.com/Rubbs/se_project_react.git
 
 ## Demo
 
+Presentation, https://www.loom.com/share/20f66aac03fa43abb5acd24b9a9de6c3
 Sing up, https://loom.com/i/93575e7899a24302bb7bad7ea621419f
 Log in, https://loom.com/i/2fee60d362344a4eb62e76fc9f05680d
